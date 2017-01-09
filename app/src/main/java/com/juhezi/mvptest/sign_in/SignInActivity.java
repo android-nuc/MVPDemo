@@ -12,7 +12,7 @@ import com.juhezi.mvptest.SingleFragmentActivity;
  * 只需要重写三个方法即可
  */
 
-public class SignInActivity extends SingleFragmentActivity{
+public class SignInActivity extends SingleFragmentActivity {
 
     private Toolbar mToolbar;
     private ActionBar mActionBar;
@@ -20,7 +20,12 @@ public class SignInActivity extends SingleFragmentActivity{
     @Override
     protected int getLayoutResId() {
         // 若子类有更好的容器视图则可以返回新的容器布局文件
-         return R.layout.sign_in_act;
+        return R.layout.sign_in_act;
+    }
+
+    @Override
+    protected int getFragmentContainerId() {
+        return R.id.fragment_container;
     }
 
     @Override
