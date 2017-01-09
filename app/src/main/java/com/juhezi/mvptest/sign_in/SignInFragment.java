@@ -11,7 +11,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.juhezi.mvptest.R;
-import com.juhezi.mvptest.util.Action;
+import com.juhezi.mvptest.model.ResponseImpl;
+import com.juhezi.mvptest.model.local.LocalResponse;
+import com.juhezi.mvptest.model.remote.RemoteResponse;
 
 /**
  * Created by qiao1 on 2017/1/7.
@@ -26,6 +28,13 @@ public class SignInFragment extends Fragment implements SignInContract.View {
     private EditText mEtPasswd;
     private Button mBtnSignIn;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mPresenter = new SignInPresenter(this,
+                new ResponseImpl(new LocalResponse(), new RemoteResponse()));
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,6 +42,7 @@ public class SignInFragment extends Fragment implements SignInContract.View {
         mEtPasswd = (EditText) rootView.findViewById(R.id.et_username);
         mEtUsername = (EditText) rootView.findViewById(R.id.et_passwd);
         mBtnSignIn = (Button) rootView.findViewById(R.id.btn_sign_in);
+
         initEvent();
         return rootView;
     }
@@ -83,5 +93,13 @@ public class SignInFragment extends Fragment implements SignInContract.View {
     @Override
     public void showToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     *
+     * @return 返回一个指定的Fragment实例
+     */
+    public static Fragment newInstance() {
+        return new SignInFragment();
     }
 }

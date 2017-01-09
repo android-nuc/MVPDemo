@@ -1,49 +1,40 @@
 package com.juhezi.mvptest.sign_in;
 
-import android.net.Uri;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.juhezi.mvptest.R;
-import com.juhezi.mvptest.model.ResponseImpl;
-import com.juhezi.mvptest.model.local.LocalResponse;
-import com.juhezi.mvptest.model.remote.RemoteResponse;
+import com.juhezi.mvptest.SingleFragmentActivity;
 
-public class SignInActivity extends AppCompatActivity {
+/**
+ * 简化Activity托管Fragment
+ * 只需要重写三个方法即可
+ */
+
+public class SignInActivity extends SingleFragmentActivity{
 
     private Toolbar mToolbar;
     private ActionBar mActionBar;
 
-    private SignInFragment mFragment;
-    private SignInPresenter mPresenter;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.sign_in_act);
-
-        initActionBar();
-
-        initFragment();
+    protected int getLayoutResId() {
+        // 若子类有更好的容器视图则可以返回新的容器布局文件
+         return R.layout.sign_in_act;
     }
 
-    private void initFragment() {
-        mFragment = (SignInFragment) getSupportFragmentManager().findFragmentById(R.id.rl_sign_in_frag);
-        if (mFragment == null) {
-            mFragment = new SignInFragment();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.rl_sign_in_frag, mFragment)
-                    .commit();
-        }
-        mPresenter = new SignInPresenter(mFragment,
-                new ResponseImpl(new LocalResponse(), new RemoteResponse()));
+    @Override
+    protected Fragment createFragment() {
+        // 创建指定Fragment
+        return SignInFragment.newInstance();
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        // 这里将presenter的初始化移到了Fragment
+        initActionBar();
+
     }
 
     private void initActionBar() {
@@ -52,5 +43,6 @@ public class SignInActivity extends AppCompatActivity {
         mActionBar = getSupportActionBar();
         mActionBar.setHomeButtonEnabled(true);
     }
+
 
 }
