@@ -28,14 +28,7 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
      * 假设布局文件名字为activity_fragment.xml
      */
     @LayoutRes
-    protected int getLayoutResId() {
-        // return R.layout.activity_fragment;
-        /**
-         * 因为没有创建activity_fragment.xml
-         * 所以暂时用现有的布局文件
-         */
-        return R.layout.sign_in_act;
-    }
+    protected abstract int getLayoutResId();
 
     @IdRes
     protected abstract int getFragmentContainerId();
